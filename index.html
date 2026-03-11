@@ -142,8 +142,6 @@ font-weight:bold;
 
 <script>
 
-let avaliacoes = JSON.parse(localStorage.getItem("avaliacoes")) || []
-
 function enviar(){
 
 let dados = {
@@ -164,43 +162,18 @@ method:"POST",
 body:JSON.stringify(dados)
 
 })
-.then(()=>{
+.then(res => res.text())
+.then(res => {
 
-document.getElementById("msg").innerText="Avaliação enviada!"
-
-})
-
-}
-
-let avaliacao={
-
-nome:nome,
-sobrenome:sobrenome,
-
-acougue:document.getElementById("acougue").value,
-hortifruti:document.getElementById("hortifruti").value,
-prateleiras:document.getElementById("prateleiras").value,
-caixa:document.getElementById("caixa").value,
-
-comentario:document.getElementById("comentario").value,
-
-data:new Date().toLocaleString()
-
-}
-
-avaliacoes.push(avaliacao)
-
-localStorage.setItem("avaliacoes",JSON.stringify(avaliacoes))
-
-document.getElementById("msg").innerText =
-"Avaliação enviada! Total de avaliações: " + avaliacoes.length
+document.getElementById("msg").innerText="Avaliação enviada com sucesso!"
 
 document.getElementById("comentario").value=""
+
+})
 
 }
 
 </script>
 
 </body>
-
 </html>
