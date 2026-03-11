@@ -173,22 +173,7 @@ document.getElementById("comentario").value=""
 
 }
 
-fetch("https://script.google.com/macros/s/AKfycbz0hDd4fkBOsn7U-FP0rNX4G-TAcGaFZZupVGg1Ah_M67K-Emav3bsDVi7nhd9glZfD/exec",{
 
-method:"POST",
-body:JSON.stringify(dados)
-
-})
-.then(res => res.text())
-.then(res => {
-
-document.getElementById("msg").innerText="Avaliação enviada com sucesso!"
-
-document.getElementById("comentario").value=""
-
-})
-
-}
 
 </script>
 
