@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
+
+  Produzido por Kauã Castro 
 <head>
 <meta charset="UTF-8">
-<title>Sistema de Avaliação - Supermercado Tibério</title>
+<title>Avaliação do Supermercado Tibério</title>
 
 <style>
 
 body{
 font-family:Arial;
-background:#fff3cd;
+background:#fff8e1;
 margin:0;
 }
 
@@ -22,44 +24,53 @@ text-align:center;
 
 .container{
 padding:20px;
+max-width:700px;
+margin:auto;
 }
 
 .card{
 background:white;
 padding:20px;
-margin-bottom:20px;
 border-radius:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
+margin-bottom:20px;
+}
+
+h2{
+color:#d32f2f;
+}
+
+.estrelas{
+font-size:30px;
+cursor:pointer;
+color:#ccc;
+}
+
+.ativa{
+color:#fbc02d;
+}
+
+textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
 }
 
 button{
 background:#fbc02d;
 border:none;
-padding:10px 20px;
-border-radius:5px;
+padding:12px;
+margin-top:15px;
+width:100%;
+font-size:16px;
 cursor:pointer;
+border-radius:5px;
 font-weight:bold;
 }
 
-input,select{
-padding:8px;
-margin:5px;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:10px;
-}
-
-th,td{
-border:1px solid #ccc;
-padding:8px;
-text-align:center;
-}
-
-th{
-background:#fbc02d;
+.resultado{
+margin-top:15px;
+font-weight:bold;
 }
 
 </style>
@@ -69,61 +80,33 @@ background:#fbc02d;
 <body>
 
 <header>
-<h1>Sistema de Avaliação do Supermercado Tibério</h1>
+<h1>Avaliação do Supermercado Tibério</h1>
+<p>Sua opinião ajuda a melhorar nosso atendimento</p>
 </header>
 
 <div class="container">
 
 <div class="card">
 
-<h2>Avaliar Atendimento</h2>
+<h2>Açougue</h2>
+<div class="estrelas" data-setor="acougue"></div>
 
-<select id="nota">
+<h2>Hortifruti</h2>
+<div class="estrelas" data-setor="hortifruti"></div>
 
-<option value="">Escolha a nota</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
+<h2>Prateleiras</h2>
+<div class="estrelas" data-setor="prateleiras"></div>
 
-</select>
+<h2>Caixa</h2>
+<div class="estrelas" data-setor="caixa"></div>
 
-<button onclick="avaliar()">Enviar Avaliação</button>
+<h2>Observação</h2>
 
-<p id="media">Média: 0</p>
-<p id="total">Total de avaliações: 0</p>
+<textarea id="comentario" rows="4" placeholder="Deixe um comentário (opcional)"></textarea>
 
-</div>
+<button onclick="enviar()">Enviar Avaliação</button>
 
-<div class="card">
-
-<h2>Cadastro de Produtos</h2>
-
-<input id="produto" placeholder="Nome do produto">
-
-<select id="tipo">
-<option value="unidade">Unidade</option>
-<option value="peso">Peso (kg)</option>
-</select>
-
-<input id="quantidade" type="number" placeholder="Quantidade">
-
-<button onclick="addProduto()">Cadastrar</button>
-
-<table>
-
-<thead>
-<tr>
-<th>Produto</th>
-<th>Tipo</th>
-<th>Quantidade</th>
-</tr>
-</thead>
-
-<tbody id="tabela"></tbody>
-
-</table>
+<p class="resultado" id="msg"></p>
 
 </div>
 
@@ -131,91 +114,79 @@ background:#fbc02d;
 
 <script>
 
-let notas = JSON.parse(localStorage.getItem("notas")) || []
-let produtos = JSON.parse(localStorage.getItem("produtos")) || []
+let avaliacoes = JSON.parse(localStorage.getItem("avaliacoes")) || []
 
-function avaliar(){
+let notas = {
+acougue:0,
+hortifruti:0,
+prateleiras:0,
+caixa:0
+}
 
-let nota=document.getElementById("nota").value
+document.querySelectorAll(".estrelas").forEach(container=>{
 
-if(nota==""){
-alert("Escolha uma nota")
+for(let i=1;i<=5;i++){
+
+let estrela=document.createElement("span")
+estrela.innerHTML="★"
+
+estrela.onclick=()=>{
+
+notas[container.dataset.setor]=i
+
+container.querySelectorAll("span").forEach((e,index)=>{
+
+e.classList.toggle("ativa",index<i)
+
+})
+
+}
+
+container.appendChild(estrela)
+
+}
+
+})
+
+function enviar(){
+
+let nome=document.getElementById("nome").value
+let sobrenome=document.getElementById("sobrenome").value
+let comentario=document.getElementById("comentario").value
+
+if(nome=="" || sobrenome==""){
+alert("Preencha nome e sobrenome")
 return
 }
 
-notas.push(Number(nota))
+let avaliacao={
+nome:nome,
+sobrenome:sobrenome,
+notas:{...notas},
+comentario:comentario,
+data:new Date().toLocaleString()
+}
 
-localStorage.setItem("notas", JSON.stringify(notas))
+avaliacoes.push(avaliacao)
 
-calcularMedia()
+localStorage.setItem("avaliacoes",JSON.stringify(avaliacoes))
+
+document.getElementById("msg").innerText=
+"Avaliação enviada! Total de avaliações: "+avaliacoes.length
+
+document.getElementById("comentario").value=""
 
 }
 
-function calcularMedia(){
+avaliacoes.push(avaliacao)
 
-let soma=0
+localStorage.setItem("avaliacoes",JSON.stringify(avaliacoes))
 
-notas.forEach(n=>{
-soma+=n
-})
+document.getElementById("msg").innerText=
+"Avaliação enviada! Total de avaliações: "+avaliacoes.length
 
-let media=soma/notas.length
+document.getElementById("comentario").value=""
 
-document.getElementById("media").innerText="Média: "+media.toFixed(1)
-document.getElementById("total").innerText="Total de avaliações: "+notas.length
-
-}
-
-function addProduto(){
-
-let nome=document.getElementById("produto").value
-let tipo=document.getElementById("tipo").value
-let quantidade=document.getElementById("quantidade").value
-
-if(nome=="" || quantidade==""){
-alert("Preencha todos os campos")
-return
-}
-
-produtos.push({
-nome,
-tipo,
-quantidade
-})
-
-localStorage.setItem("produtos", JSON.stringify(produtos))
-
-render()
-
-document.getElementById("produto").value=""
-document.getElementById("quantidade").value=""
-
-}
-
-function render(){
-
-let tabela=document.getElementById("tabela")
-
-tabela.innerHTML=""
-
-produtos.forEach(p=>{
-
-tabela.innerHTML+=`
-<tr>
-<td>${p.nome}</td>
-<td>${p.tipo}</td>
-<td>${p.quantidade}</td>
-</tr>
-`
-
-})
-
-}
-
-render()
-
-if(notas.length>0){
-calcularMedia()
 }
 
 </script>
