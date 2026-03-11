@@ -146,12 +146,30 @@ let avaliacoes = JSON.parse(localStorage.getItem("avaliacoes")) || []
 
 function enviar(){
 
-let nome=document.getElementById("nome").value
-let sobrenome=document.getElementById("sobrenome").value
+let dados = {
 
-if(nome=="" || sobrenome==""){
-alert("Preencha nome e sobrenome")
-return
+nome:document.getElementById("nome").value,
+sobrenome:document.getElementById("sobrenome").value,
+acougue:document.getElementById("acougue").value,
+hortifruti:document.getElementById("hortifruti").value,
+prateleiras:document.getElementById("prateleiras").value,
+caixa:document.getElementById("caixa").value,
+comentario:document.getElementById("comentario").value
+
+}
+
+fetch("https://script.google.com/macros/s/AKfycbz0hDd4fkBOsn7U-FP0rNX4G-TAcGaFZZupVGg1Ah_M67K-Emav3bsDVi7nhd9glZfD/exec",{
+
+method:"POST",
+body:JSON.stringify(dados)
+
+})
+.then(()=>{
+
+document.getElementById("msg").innerText="Avaliação enviada!"
+
+})
+
 }
 
 let avaliacao={
