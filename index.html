@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
-
-  Produzido por Kauã Castro 
 <head>
 <meta charset="UTF-8">
 <title>Avaliação do Supermercado Tibério</title>
@@ -40,14 +38,11 @@ h2{
 color:#d32f2f;
 }
 
-.estrelas{
-font-size:30px;
-cursor:pointer;
-color:#ccc;
-}
-
-.ativa{
-color:#fbc02d;
+input,select{
+width:100%;
+padding:10px;
+margin-top:5px;
+margin-bottom:10px;
 }
 
 textarea{
@@ -88,17 +83,50 @@ font-weight:bold;
 
 <div class="card">
 
+<h2>Identificação</h2>
+
+<input id="nome" placeholder="Nome">
+<input id="sobrenome" placeholder="Sobrenome">
+
 <h2>Açougue</h2>
-<div class="estrelas" data-setor="acougue"></div>
+<select id="acougue">
+<option value="">Escolha uma nota</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+</select>
 
 <h2>Hortifruti</h2>
-<div class="estrelas" data-setor="hortifruti"></div>
+<select id="hortifruti">
+<option value="">Escolha uma nota</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+</select>
 
 <h2>Prateleiras</h2>
-<div class="estrelas" data-setor="prateleiras"></div>
+<select id="prateleiras">
+<option value="">Escolha uma nota</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+</select>
 
 <h2>Caixa</h2>
-<div class="estrelas" data-setor="caixa"></div>
+<select id="caixa">
+<option value="">Escolha uma nota</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+</select>
 
 <h2>Observação</h2>
 
@@ -116,43 +144,10 @@ font-weight:bold;
 
 let avaliacoes = JSON.parse(localStorage.getItem("avaliacoes")) || []
 
-let notas = {
-acougue:0,
-hortifruti:0,
-prateleiras:0,
-caixa:0
-}
-
-document.querySelectorAll(".estrelas").forEach(container=>{
-
-for(let i=1;i<=5;i++){
-
-let estrela=document.createElement("span")
-estrela.innerHTML="★"
-
-estrela.onclick=()=>{
-
-notas[container.dataset.setor]=i
-
-container.querySelectorAll("span").forEach((e,index)=>{
-
-e.classList.toggle("ativa",index<i)
-
-})
-
-}
-
-container.appendChild(estrela)
-
-}
-
-})
-
 function enviar(){
 
 let nome=document.getElementById("nome").value
 let sobrenome=document.getElementById("sobrenome").value
-let comentario=document.getElementById("comentario").value
 
 if(nome=="" || sobrenome==""){
 alert("Preencha nome e sobrenome")
@@ -160,21 +155,18 @@ return
 }
 
 let avaliacao={
+
 nome:nome,
 sobrenome:sobrenome,
-notas:{...notas},
-comentario:comentario,
+
+acougue:document.getElementById("acougue").value,
+hortifruti:document.getElementById("hortifruti").value,
+prateleiras:document.getElementById("prateleiras").value,
+caixa:document.getElementById("caixa").value,
+
+comentario:document.getElementById("comentario").value,
+
 data:new Date().toLocaleString()
-}
-
-avaliacoes.push(avaliacao)
-
-localStorage.setItem("avaliacoes",JSON.stringify(avaliacoes))
-
-document.getElementById("msg").innerText=
-"Avaliação enviada! Total de avaliações: "+avaliacoes.length
-
-document.getElementById("comentario").value=""
 
 }
 
@@ -182,8 +174,8 @@ avaliacoes.push(avaliacao)
 
 localStorage.setItem("avaliacoes",JSON.stringify(avaliacoes))
 
-document.getElementById("msg").innerText=
-"Avaliação enviada! Total de avaliações: "+avaliacoes.length
+document.getElementById("msg").innerText =
+"Avaliação enviada! Total de avaliações: " + avaliacoes.length
 
 document.getElementById("comentario").value=""
 
@@ -192,4 +184,5 @@ document.getElementById("comentario").value=""
 </script>
 
 </body>
+
 </html>
