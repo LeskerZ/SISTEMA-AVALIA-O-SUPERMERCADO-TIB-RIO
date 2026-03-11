@@ -9,21 +9,12 @@
 
 body{
 font-family:Arial;
-background:#fff8e1;
-margin:0;
+background:#f4f4f4;
+padding:20px;
 }
 
-header{
-background:#d32f2f;
-color:white;
-padding:20px;
+h1{
 text-align:center;
-}
-
-.container{
-padding:20px;
-max-width:900px;
-margin:auto;
 }
 
 table{
@@ -39,7 +30,8 @@ text-align:center;
 }
 
 th{
-background:#fbc02d;
+background:#d32f2f;
+color:white;
 }
 
 </style>
@@ -48,17 +40,12 @@ background:#fbc02d;
 
 <body>
 
-<header>
 <h1>Dashboard de Avaliações</h1>
-</header>
-
-<div class="container">
 
 <table>
 
 <thead>
 <tr>
-
 <th>Cliente</th>
 <th>Açougue</th>
 <th>Hortifruti</th>
@@ -66,39 +53,46 @@ background:#fbc02d;
 <th>Caixa</th>
 <th>Comentário</th>
 <th>Data</th>
-
 </tr>
 </thead>
 
-<tbody id="tabela"></tbody>
+<tbody id="tabela">
+
+</tbody>
 
 </table>
 
-</div>
-
 <script>
+
+function carregarAvaliacoes(){
 
 let avaliacoes = JSON.parse(localStorage.getItem("avaliacoes")) || []
 
-let tabela=document.getElementById("tabela")
+let tabela = document.getElementById("tabela")
 
-avaliacoes.forEach(a=>{
+tabela.innerHTML=""
 
-tabela.innerHTML+=`
-<tr>
+avaliacoes.forEach(a => {
 
+let linha = document.createElement("tr")
+
+linha.innerHTML = `
 <td>${a.nome} ${a.sobrenome}</td>
-<td>${a.notas.acougue}</td>
-<td>${a.notas.hortifruti}</td>
-<td>${a.notas.prateleiras}</td>
-<td>${a.notas.caixa}</td>
+<td>${a.acougue}</td>
+<td>${a.hortifruti}</td>
+<td>${a.prateleiras}</td>
+<td>${a.caixa}</td>
 <td>${a.comentario}</td>
 <td>${a.data}</td>
-
-</tr>
 `
 
+tabela.appendChild(linha)
+
 })
+
+}
+
+carregarAvaliacoes()
 
 </script>
 
