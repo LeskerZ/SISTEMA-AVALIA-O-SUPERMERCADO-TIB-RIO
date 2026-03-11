@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<title>Dashboard de Avaliações</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#fff8e1;
+margin:0;
+}
+
+header{
+background:#d32f2f;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+padding:20px;
+max-width:900px;
+margin:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#fbc02d;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Dashboard de Avaliações</h1>
+</header>
+
+<div class="container">
+
+<table>
+
+<thead>
+<tr>
+
+<th>Cliente</th>
+<th>Açougue</th>
+<th>Hortifruti</th>
+<th>Prateleiras</th>
+<th>Caixa</th>
+<th>Comentário</th>
+<th>Data</th>
+
+</tr>
+</thead>
+
+<tbody id="tabela"></tbody>
+
+</table>
+
+</div>
+
+<script>
+
+let avaliacoes = JSON.parse(localStorage.getItem("avaliacoes")) || []
+
+let tabela=document.getElementById("tabela")
+
+avaliacoes.forEach(a=>{
+
+tabela.innerHTML+=`
+<tr>
+
+<td>${a.nome} ${a.sobrenome}</td>
+<td>${a.notas.acougue}</td>
+<td>${a.notas.hortifruti}</td>
+<td>${a.notas.prateleiras}</td>
+<td>${a.notas.caixa}</td>
+<td>${a.comentario}</td>
+<td>${a.data}</td>
+
+</tr>
+`
+
+})
+
+</script>
+
+</body>
+</html>
