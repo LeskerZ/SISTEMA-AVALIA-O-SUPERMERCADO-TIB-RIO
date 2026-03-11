@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 <meta charset="UTF-8">
 <title>AvaliaMarket</title>
@@ -7,14 +8,13 @@
 <style>
 
 body{
-font-family: Arial;
-background:#fff8e1;
+font-family:Arial;
+background:#fff3cd;
 margin:0;
-padding:0;
 }
 
 header{
-background:#c62828;
+background:#d32f2f;
 color:white;
 padding:20px;
 text-align:center;
@@ -28,15 +28,14 @@ padding:20px;
 background:white;
 padding:20px;
 margin-bottom:20px;
-border-radius:8px;
+border-radius:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 button{
-background:#f9a825;
+background:#fbc02d;
 border:none;
 padding:10px 20px;
-color:white;
 border-radius:5px;
 cursor:pointer;
 }
@@ -49,7 +48,6 @@ margin:5px;
 table{
 width:100%;
 border-collapse:collapse;
-margin-top:10px;
 }
 
 th,td{
@@ -59,8 +57,7 @@ text-align:center;
 }
 
 th{
-background:#f9a825;
-color:white;
+background:#fbc02d;
 }
 
 </style>
@@ -70,14 +67,14 @@ color:white;
 <body>
 
 <header>
-<h1>AvaliaMarket</h1>
-<p>Sistema de Avaliação e Controle de Produtos</p>
+<h1>Avaliação do Supermercado</h1>
 </header>
 
 <div class="container">
 
 <div class="card">
-<h2>Avaliação do Cliente</h2>
+
+<h2>Avaliar atendimento</h2>
 
 <select id="nota">
 <option value="">Escolha a nota</option>
@@ -88,38 +85,35 @@ color:white;
 <option>5</option>
 </select>
 
-<input type="text" id="comentario" placeholder="Comentário">
+<button onclick="avaliar()">Enviar</button>
 
-<button onclick="enviar()">Enviar Avaliação</button>
+<p id="media">Média: 0</p>
+<p id="total">Total: 0</p>
 
 </div>
 
 <div class="card">
 
-<h2>Cadastro de Produto</h2>
+<h2>Cadastro de Produtos</h2>
 
-<input type="text" id="produto" placeholder="Produto">
+<input id="produto" placeholder="Nome do produto">
 
 <select id="tipo">
-
 <option value="unidade">Unidade</option>
-<option value="peso">Peso (kg)</option>
-
+<option value="peso">Peso</option>
 </select>
 
-<input type="number" id="quantidade" placeholder="Quantidade">
+<input id="quantidade" type="number" placeholder="Quantidade">
 
-<button onclick="adicionar()">Adicionar</button>
+<button onclick="addProduto()">Cadastrar</button>
 
 <table>
 
 <thead>
 <tr>
-
 <th>Produto</th>
 <th>Tipo</th>
 <th>Quantidade</th>
-
 </tr>
 </thead>
 
@@ -129,74 +123,52 @@ color:white;
 
 </div>
 
-<div class="card">
-
-<h2>Relatório de Avaliações</h2>
-
-<p id="media">Média: 0</p>
-<p id="total">Total de avaliações: 0</p>
-
-</div>
-
 </div>
 
 <script>
 
-let avaliacoes = []
-let produtos = []
+let notas=[]
+let produtos=[]
 
-function enviar(){
+function avaliar(){
 
-let nota = document.getElementById("nota").value
+let nota=document.getElementById("nota").value
 
 if(nota==""){
-
 alert("Escolha uma nota")
-
 return
-
 }
 
-avaliacoes.push(Number(nota))
+notas.push(Number(nota))
 
-let soma = 0
+let soma=0
 
-avaliacoes.forEach(n=>{
-
-soma += n
-
+notas.forEach(n=>{
+soma+=n
 })
 
-let media = soma / avaliacoes.length
+let media=soma/notas.length
 
-document.getElementById("media").innerText = "Média: " + media.toFixed(1)
-
-document.getElementById("total").innerText = "Total de avaliações: " + avaliacoes.length
-
-document.getElementById("comentario").value=""
+document.getElementById("media").innerText="Média: "+media.toFixed(1)
+document.getElementById("total").innerText="Total: "+notas.length
 
 }
 
-function adicionar(){
+function addProduto(){
 
-let produto = document.getElementById("produto").value
-let tipo = document.getElementById("tipo").value
-let quantidade = document.getElementById("quantidade").value
+let nome=document.getElementById("produto").value
+let tipo=document.getElementById("tipo").value
+let quantidade=document.getElementById("quantidade").value
 
-if(produto=="" || quantidade==""){
-
+if(nome=="" || quantidade==""){
 alert("Preencha os campos")
-
 return
-
 }
 
 produtos.push({
-
-produto,
+nome,
 tipo,
 quantidade
-
 })
 
 render()
@@ -208,19 +180,17 @@ document.getElementById("quantidade").value=""
 
 function render(){
 
-let tabela = document.getElementById("tabela")
+let tabela=document.getElementById("tabela")
 
 tabela.innerHTML=""
 
 produtos.forEach(p=>{
 
-tabela.innerHTML += `
+tabela.innerHTML+=`
 <tr>
-
-<td>${p.produto}</td>
+<td>${p.nome}</td>
 <td>${p.tipo}</td>
 <td>${p.quantidade}</td>
-
 </tr>
 `
 
