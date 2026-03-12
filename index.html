@@ -2,7 +2,7 @@
 <html lang="pt-br">
 
 <head>
-PRODUZIDO POR KAUÃ CASTRO
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -25,50 +25,18 @@ text-align:center;
 }
 
 .container{
-max-width:600px;
+max-width:800px;
 margin:auto;
 padding:20px;
 }
 
-.card{
+iframe{
+width:100%;
+height:900px;
+border:none;
 background:white;
-padding:20px;
 border-radius:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-input, select, textarea{
-
-width:100%;
-padding:10px;
-margin-top:10px;
-margin-bottom:15px;
-border-radius:5px;
-border:1px solid #ccc;
-
-}
-
-button{
-
-background:#d32f2f;
-color:white;
-border:none;
-padding:12px;
-border-radius:5px;
-width:100%;
-font-size:16px;
-cursor:pointer;
-
-}
-
-button:hover{
-background:#b71c1c;
-}
-
-#mensagem{
-text-align:center;
-margin-top:15px;
-font-weight:bold;
 }
 
 </style>
@@ -85,103 +53,9 @@ font-weight:bold;
 
 <div class="container">
 
-<div class="card">
-
-<input id="nome" placeholder="Nome">
-
-<input id="sobrenome" placeholder="Sobrenome">
-
-<label>Açougue</label>
-<select id="acougue">
-<option value="5">Excelente</option>
-<option value="4">Bom</option>
-<option value="3">Regular</option>
-<option value="2">Ruim</option>
-<option value="1">Péssimo</option>
-</select>
-
-<label>Hortifruti</label>
-<select id="hortifruti">
-<option value="5">Excelente</option>
-<option value="4">Bom</option>
-<option value="3">Regular</option>
-<option value="2">Ruim</option>
-<option value="1">Péssimo</option>
-</select>
-
-<label>Prateleiras</label>
-<select id="prateleiras">
-<option value="5">Excelente</option>
-<option value="4">Bom</option>
-<option value="3">Regular</option>
-<option value="2">Ruim</option>
-<option value="1">Péssimo</option>
-</select>
-
-<label>Caixa</label>
-<select id="caixa">
-<option value="5">Excelente</option>
-<option value="4">Bom</option>
-<option value="3">Regular</option>
-<option value="2">Ruim</option>
-<option value="1">Péssimo</option>
-</select>
-
-<textarea id="comentario" placeholder="Comentário"></textarea>
-
-<button onclick="enviar()">Enviar avaliação</button>
-
-<p id="mensagem"></p>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScBmrMjW3SYpbeJksY2pL_bWAS3sv7HYT1r13LGwM5x4O4Lyg/viewform?embedded=true"></iframe>
 
 </div>
-
-</div>
-
-<script>
-
-const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbyce0J6VPRRTfPOHQzZFk5DEJ2hPWNOsBUhdEejUVrQ8dYC6sAZMh-SGaVVjxfvF40R/exec";
-
-function enviar(){
-
-var dados = {
-
-nome:document.getElementById("nome").value,
-sobrenome:document.getElementById("sobrenome").value,
-acougue:document.getElementById("acougue").value,
-hortifruti:document.getElementById("hortifruti").value,
-prateleiras:document.getElementById("prateleiras").value,
-caixa:document.getElementById("caixa").value,
-comentario:document.getElementById("comentario").value
-
-};
-
-fetch(URL_SCRIPT,{
-
-method:"POST",
-
-body:JSON.stringify(dados)
-
-})
-
-.then(res=>res.json())
-
-.then(resposta=>{
-
-document.getElementById("mensagem").innerText="Avaliação enviada com sucesso!";
-
-document.querySelectorAll("input, textarea").forEach(e=>e.value="");
-
-})
-
-.catch(()=>{
-
-document.getElementById("mensagem").innerText="Erro ao enviar.";
-
-});
-
-}
-
-</script>
 
 </body>
 
