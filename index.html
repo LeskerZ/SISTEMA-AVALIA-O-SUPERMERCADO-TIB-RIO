@@ -2,8 +2,11 @@
 <html lang="pt-br">
 
 <head>
+PRODUZIDO POR KAUÃ CASTRO
 <meta charset="UTF-8">
-<title>Avaliação do Supermercado Tibério</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Avaliação do Supermercado</title>
 
 <style>
 
@@ -11,6 +14,7 @@ body{
 font-family:Arial;
 background:#fff8e1;
 margin:0;
+padding:0;
 }
 
 header{
@@ -21,9 +25,9 @@ text-align:center;
 }
 
 .container{
-padding:20px;
-max-width:700px;
+max-width:600px;
 margin:auto;
+padding:20px;
 }
 
 .card{
@@ -31,39 +35,38 @@ background:white;
 padding:20px;
 border-radius:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
-margin-bottom:20px;
 }
 
-h2{
-color:#d32f2f;
-}
+input, select, textarea{
 
-input,select{
-width:100%;
-padding:10px;
-margin-top:5px;
-margin-bottom:10px;
-}
-
-textarea{
 width:100%;
 padding:10px;
 margin-top:10px;
+margin-bottom:15px;
+border-radius:5px;
+border:1px solid #ccc;
+
 }
 
 button{
-background:#fbc02d;
+
+background:#d32f2f;
+color:white;
 border:none;
 padding:12px;
-margin-top:15px;
+border-radius:5px;
 width:100%;
 font-size:16px;
 cursor:pointer;
-border-radius:5px;
-font-weight:bold;
+
 }
 
-.resultado{
+button:hover{
+background:#b71c1c;
+}
+
+#mensagem{
+text-align:center;
 margin-top:15px;
 font-weight:bold;
 }
@@ -75,66 +78,60 @@ font-weight:bold;
 <body>
 
 <header>
-<h1>Avaliação do Supermercado Tibério</h1>
-<p>Sua opinião ajuda a melhorar nosso atendimento</p>
+
+<h2>Avalie nosso supermercado</h2>
+
 </header>
 
 <div class="container">
 
 <div class="card">
 
-<h2>Identificação</h2>
-
 <input id="nome" placeholder="Nome">
+
 <input id="sobrenome" placeholder="Sobrenome">
 
-<h2>Açougue</h2>
+<label>Açougue</label>
 <select id="acougue">
-<option value="">Escolha uma nota</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
+<option value="5">Excelente</option>
+<option value="4">Bom</option>
+<option value="3">Regular</option>
+<option value="2">Ruim</option>
+<option value="1">Péssimo</option>
 </select>
 
-<h2>Hortifruti</h2>
+<label>Hortifruti</label>
 <select id="hortifruti">
-<option value="">Escolha uma nota</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
+<option value="5">Excelente</option>
+<option value="4">Bom</option>
+<option value="3">Regular</option>
+<option value="2">Ruim</option>
+<option value="1">Péssimo</option>
 </select>
 
-<h2>Prateleiras</h2>
+<label>Prateleiras</label>
 <select id="prateleiras">
-<option value="">Escolha uma nota</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
+<option value="5">Excelente</option>
+<option value="4">Bom</option>
+<option value="3">Regular</option>
+<option value="2">Ruim</option>
+<option value="1">Péssimo</option>
 </select>
 
-<h2>Caixa</h2>
+<label>Caixa</label>
 <select id="caixa">
-<option value="">Escolha uma nota</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
+<option value="5">Excelente</option>
+<option value="4">Bom</option>
+<option value="3">Regular</option>
+<option value="2">Ruim</option>
+<option value="1">Péssimo</option>
 </select>
 
-<h2>Observação</h2>
+<textarea id="comentario" placeholder="Comentário"></textarea>
 
-<textarea id="comentario" rows="4" placeholder="Deixe um comentário (opcional)"></textarea>
+<button onclick="enviar()">Enviar avaliação</button>
 
-<button onclick="enviar()">Enviar Avaliação</button>
-
-<p class="resultado" id="msg"></p>
+<p id="mensagem"></p>
 
 </div>
 
@@ -142,9 +139,11 @@ font-weight:bold;
 
 <script>
 
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbyce0J6VPRRTfPOHQzZFk5DEJ2hPWNOsBUhdEejUVrQ8dYC6sAZMh-SGaVVjxfvF40R/exec";
+
 function enviar(){
 
-let dados = {
+var dados = {
 
 nome:document.getElementById("nome").value,
 sobrenome:document.getElementById("sobrenome").value,
@@ -154,28 +153,36 @@ prateleiras:document.getElementById("prateleiras").value,
 caixa:document.getElementById("caixa").value,
 comentario:document.getElementById("comentario").value
 
-}
+};
 
-fetch("https://script.google.com/macros/s/AKfycbz0hDd4fkBOsn7U-FP0rNX4G-TAcGaFZZupVGg1Ah_M67K-Emav3bsDVi7nhd9glZfD/exec",{
+fetch(URL_SCRIPT,{
 
 method:"POST",
-mode:"no-cors",
-headers:{
-"Content-Type":"application/json"
-},
+
 body:JSON.stringify(dados)
 
 })
 
-document.getElementById("msg").innerText="Avaliação enviada com sucesso!"
+.then(res=>res.json())
 
-document.getElementById("comentario").value=""
+.then(resposta=>{
+
+document.getElementById("mensagem").innerText="Avaliação enviada com sucesso!";
+
+document.querySelectorAll("input, textarea").forEach(e=>e.value="");
+
+})
+
+.catch(()=>{
+
+document.getElementById("mensagem").innerText="Erro ao enviar.";
+
+});
 
 }
-
-
 
 </script>
 
 </body>
+
 </html>
